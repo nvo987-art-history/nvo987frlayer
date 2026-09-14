@@ -1,0 +1,2914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="NVO987 Institution Layer — Culture Visuelle Moderne et Contemporaine.">
+<meta name="theme-color" content="#171717">
+<title>NVO987 Institution Layer | Nicholas Van-Orton</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #171717;
+    --bg-deep: #141414;
+    --paper: #f4f2ed;
+    --ink: #f4f2ed;
+    --muted: #a6a19a;
+    --line: #393735;
+    --line-strong: #4a4743;
+    --orange: #f26a21;
+    --orange-light: #f47721;
+    --orange-dark: #e96b20;
+    --amber: #ffb11b;
+    --black: #101010;
+
+    --serif: "Cormorant Garamond", Georgia, serif;
+    --sans: "Inter", Arial, sans-serif;
+
+    --container: 1680px;
+    --pad: clamp(24px, 4vw, 64px);
+    --ease: cubic-bezier(.22, 1, .36, 1);
+    --fast: 220ms;
+    --medium: 500ms;
+    --slow: 800ms;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    background: var(--bg);
+}
+
+body {
+    margin: 0;
+    background:
+        linear-gradient(to right, transparent calc(8.333% - 1px), rgba(255,255,255,.025) calc(8.333% - 1px), rgba(255,255,255,.025) 8.333%, transparent 8.333%),
+        var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: .035;
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,.5) 0,
+            rgba(255,255,255,.5) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+    mix-blend-mode: soft-light;
+}
+
+::selection {
+    background: var(--orange);
+    color: var(--black);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    font: inherit;
+}
+
+img,
+svg {
+    max-width: 100%;
+}
+
+:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 5px;
+}
+
+.container {
+    width: min(calc(100% - (var(--pad) * 2)), var(--container));
+    margin-inline: auto;
+}
+
+.grid-12 {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(18px, 2vw, 38px);
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .16em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.eyebrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--orange);
+    display: inline-block;
+    flex: 0 0 auto;
+}
+
+.mono {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+}
+
+.rule {
+    height: 1px;
+    background: var(--line);
+    width: 100%;
+}
+
+.orange {
+    color: var(--orange);
+}
+
+.serif {
+    font-family: var(--serif);
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+        opacity var(--slow) var(--ease),
+        transform var(--slow) var(--ease);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 80ms; }
+.reveal-delay-2 { transition-delay: 160ms; }
+.reveal-delay-3 { transition-delay: 240ms; }
+.reveal-delay-4 { transition-delay: 320ms; }
+
+/* --------------------------------------------------
+   HEADER
+-------------------------------------------------- */
+
+.site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 1000;
+    height: 92px;
+    border-bottom: 1px solid transparent;
+    transition:
+        height var(--medium) var(--ease),
+        background var(--medium) var(--ease),
+        border-color var(--medium) var(--ease);
+}
+
+.site-header.is-scrolled {
+    height: 70px;
+    background: rgba(23,23,23,.94);
+    border-color: var(--line);
+    backdrop-filter: blur(12px);
+}
+
+.header-inner {
+    height: 100%;
+    width: min(calc(100% - (var(--pad) * 2)), var(--container));
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 13px;
+    min-height: 44px;
+}
+
+.brand-marker {
+    width: 12px;
+    height: 12px;
+    background: var(--orange);
+    position: relative;
+}
+
+.brand-marker::after {
+    content: "";
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    right: -7px;
+    bottom: -7px;
+    border-right: 1px solid var(--orange);
+    border-bottom: 1px solid var(--orange);
+}
+
+.brand-copy {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    line-height: 1;
+}
+
+.brand-name {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .3em;
+}
+
+.brand-layer {
+    font-size: 10px;
+    letter-spacing: .16em;
+    color: var(--muted);
+}
+
+.primary-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(20px, 3vw, 48px);
+}
+
+.primary-nav a {
+    position: relative;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition:
+        color var(--fast) ease,
+        transform var(--fast) var(--ease);
+}
+
+.primary-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 7px;
+    height: 1px;
+    background: var(--orange);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--medium) var(--ease);
+}
+
+.primary-nav a:hover,
+.primary-nav a:focus-visible,
+.primary-nav a[aria-current="page"] {
+    color: var(--ink);
+}
+
+.primary-nav a:hover {
+    transform: translateY(-1px);
+}
+
+.primary-nav a:hover::after,
+.primary-nav a:focus-visible::after,
+.primary-nav a[aria-current="page"]::after {
+    transform: scaleX(1);
+}
+
+.nav-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.nav-toggle-lines {
+    width: 18px;
+    height: 12px;
+    position: relative;
+}
+
+.nav-toggle-lines span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transition: transform var(--fast) var(--ease), top var(--fast) var(--ease);
+}
+
+.nav-toggle-lines span:first-child { top: 2px; }
+.nav-toggle-lines span:last-child { top: 9px; }
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-lines span:first-child {
+    top: 5px;
+    transform: rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-lines span:last-child {
+    top: 5px;
+    transform: rotate(-45deg);
+}
+
+/* --------------------------------------------------
+   HERO
+-------------------------------------------------- */
+
+.hero {
+    min-height: min(920px, 100vh);
+    padding-top: 92px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    left: 8.333%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(255,255,255,.045);
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    right: 8.333%;
+    top: 17%;
+    width: 16vw;
+    max-width: 260px;
+    height: 16vw;
+    max-height: 260px;
+    border: 1px solid rgba(255,255,255,.055);
+    pointer-events: none;
+}
+
+.hero-grid {
+    position: relative;
+    z-index: 2;
+    align-items: end;
+    min-height: 650px;
+}
+
+.hero-meta {
+    grid-column: 1 / span 3;
+    align-self: start;
+    padding-top: 24px;
+}
+
+.hero-meta-list {
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.hero-meta-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.hero-meta-list li span:last-child {
+    color: var(--muted);
+    text-align: right;
+}
+
+.hero-title-wrap {
+    grid-column: 4 / span 6;
+    padding-bottom: 5vh;
+}
+
+.hero-title {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(72px, 9.2vw, 152px);
+    font-weight: 500;
+    letter-spacing: -.045em;
+    line-height: .78;
+    text-wrap: balance;
+}
+
+.hero-title span {
+    display: block;
+}
+
+.hero-title .accent-line {
+    color: var(--orange);
+    margin-left: .32em;
+}
+
+.hero-side {
+    grid-column: 10 / span 3;
+    padding-bottom: 6vh;
+}
+
+.hero-side-name {
+    margin: 0 0 24px;
+    font-family: var(--serif);
+    font-size: clamp(26px, 2.2vw, 38px);
+    line-height: .98;
+    font-weight: 500;
+}
+
+.hero-url {
+    display: inline-block;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    letter-spacing: .13em;
+    color: var(--muted);
+}
+
+.hero-diagram {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 20px;
+    align-items: center;
+    margin-top: 60px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+}
+
+.diagram-number {
+    font-family: var(--serif);
+    font-size: clamp(52px, 6vw, 88px);
+    line-height: .8;
+}
+
+.diagram-center {
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    gap: 12px 18px;
+    align-items: end;
+}
+
+.diagram-center span {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.diagram-center span:nth-child(3) {
+    color: var(--orange);
+}
+
+.diagram-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+}
+
+.diagram-node {
+    width: 8px;
+    height: 8px;
+    background: var(--orange);
+}
+
+.diagram-line {
+    width: 80px;
+    height: 1px;
+    background: var(--line-strong);
+}
+
+.hero-placeholder {
+    grid-column: 1 / span 8;
+    margin-top: 24px;
+    color: var(--muted);
+    font-size: 15px;
+}
+
+/* --------------------------------------------------
+   STATEMENT
+-------------------------------------------------- */
+
+.statement {
+    padding: clamp(130px, 15vw, 250px) 0;
+    position: relative;
+}
+
+.statement-grid {
+    align-items: start;
+}
+
+.statement-label {
+    grid-column: 1 / span 2;
+}
+
+.statement-copy {
+    grid-column: 4 / span 8;
+}
+
+.statement-title {
+    margin: 0;
+    max-width: 1100px;
+    font-family: var(--serif);
+    font-size: clamp(48px, 5.8vw, 92px);
+    line-height: .93;
+    font-weight: 500;
+    letter-spacing: -.035em;
+}
+
+.statement-placeholder {
+    max-width: 620px;
+    margin: 48px 0 0;
+    color: var(--muted);
+    font-size: clamp(16px, 1.2vw, 19px);
+}
+
+.statement-rule {
+    margin-top: 100px;
+}
+
+/* --------------------------------------------------
+   WHITE / ORANGE INSERT
+-------------------------------------------------- */
+
+.institutional-banner {
+    background: var(--paper);
+    color: var(--black);
+    position: relative;
+    overflow: hidden;
+}
+
+.banner-main {
+    display: grid;
+    grid-template-columns: 1.1fr 1.8fr .8fr;
+    min-height: 610px;
+}
+
+.banner-orange {
+    background: var(--orange);
+    position: relative;
+    padding: clamp(30px, 4vw, 64px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.banner-orange::before,
+.banner-orange::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(0,0,0,.22);
+    pointer-events: none;
+}
+
+.banner-orange::before {
+    width: 190px;
+    height: 190px;
+    right: -70px;
+    top: 100px;
+    transform: rotate(45deg);
+}
+
+.banner-orange::after {
+    width: 300px;
+    height: 1px;
+    right: -30px;
+    bottom: 100px;
+    background: rgba(0,0,0,.3);
+}
+
+.banner-index {
+    font-family: var(--serif);
+    font-size: clamp(68px, 7vw, 112px);
+    line-height: .75;
+}
+
+.banner-small {
+    max-width: 180px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+.banner-content {
+    padding: clamp(50px, 7vw, 110px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.banner-content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    background: rgba(0,0,0,.14);
+}
+
+.banner-kicker {
+    margin-bottom: 32px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .16em;
+}
+
+.banner-title {
+    margin: 0;
+    max-width: 760px;
+    font-family: var(--serif);
+    font-size: clamp(56px, 6.7vw, 112px);
+    line-height: .82;
+    letter-spacing: -.045em;
+    font-weight: 500;
+}
+
+.banner-title span {
+    display: block;
+}
+
+.banner-cta {
+    margin-top: 48px;
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--black);
+    padding-bottom: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    transition:
+        gap var(--fast) var(--ease),
+        border-color var(--fast) ease;
+}
+
+.banner-cta:hover {
+    gap: 21px;
+}
+
+.banner-amber {
+    background: var(--amber);
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 30px;
+}
+
+.banner-amber::before {
+    content: "";
+    width: 100%;
+    height: 72%;
+    border-left: 1px solid rgba(0,0,0,.3);
+    border-top: 1px solid rgba(0,0,0,.3);
+    position: absolute;
+    left: 20%;
+    top: 12%;
+    transform: skewY(-18deg);
+}
+
+.banner-amber-meta {
+    position: relative;
+    z-index: 2;
+    font-size: 10px;
+    line-height: 1.8;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+}
+
+.marquee {
+    border-top: 1px solid rgba(0,0,0,.2);
+    border-bottom: 1px solid rgba(0,0,0,.2);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.marquee-track {
+    display: inline-flex;
+    min-width: max-content;
+    animation: marquee 28s linear infinite;
+}
+
+.marquee-item {
+    padding: 15px 26px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+}
+
+.marquee-item::after {
+    content: "—";
+    margin-left: 52px;
+}
+
+/* --------------------------------------------------
+   INFRASTRUCTURE INDEX
+-------------------------------------------------- */
+
+.infrastructure {
+    padding: clamp(130px, 15vw, 220px) 0;
+}
+
+.infrastructure-header {
+    align-items: end;
+    margin-bottom: 80px;
+}
+
+.infrastructure-label {
+    grid-column: 1 / span 2;
+}
+
+.infrastructure-intro {
+    grid-column: 4 / span 7;
+}
+
+.infrastructure-title {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(46px, 5.5vw, 82px);
+    line-height: .9;
+    font-weight: 500;
+    letter-spacing: -.035em;
+}
+
+.infrastructure-domain {
+    margin-top: 20px;
+    color: var(--orange);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.infrastructure-description {
+    max-width: 570px;
+    margin: 34px 0 0;
+    color: var(--muted);
+    font-size: 16px;
+}
+
+.infrastructure-list {
+    border-top: 1px solid var(--line-strong);
+}
+
+.infrastructure-item {
+    display: grid;
+    grid-template-columns: 1.1fr 3fr 1fr;
+    gap: 30px;
+    align-items: start;
+    padding: 34px 0 30px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    transition:
+        padding-left var(--medium) var(--ease),
+        background var(--medium) ease;
+}
+
+.infrastructure-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--orange);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform var(--medium) var(--ease);
+}
+
+.infrastructure-item:hover {
+    padding-left: 22px;
+    background: rgba(255,255,255,.018);
+}
+
+.infrastructure-item:hover::before,
+.infrastructure-item:focus-within::before {
+    transform: scaleY(1);
+}
+
+.infrastructure-index {
+    font-family: var(--serif);
+    font-size: clamp(40px, 4vw, 62px);
+    line-height: .8;
+    color: var(--muted);
+    transition: color var(--fast) ease, transform var(--medium) var(--ease);
+}
+
+.infrastructure-item:hover .infrastructure-index {
+    color: var(--orange);
+    transform: translateX(4px);
+}
+
+.infrastructure-main {
+    min-width: 0;
+}
+
+.infrastructure-name {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(28px, 2.3vw, 38px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -.02em;
+    transition: transform var(--medium) var(--ease);
+}
+
+.infrastructure-item:hover .infrastructure-name {
+    transform: translateX(6px);
+}
+
+.infrastructure-summary {
+    margin: 15px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+}
+
+.infrastructure-action {
+    justify-self: end;
+}
+
+.details-trigger {
+    min-height: 44px;
+    padding: 8px 0;
+    border: 0;
+    border-bottom: 1px solid var(--line-strong);
+    background: transparent;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    transition:
+        color var(--fast) ease,
+        border-color var(--fast) ease,
+        gap var(--fast) var(--ease);
+}
+
+.details-trigger::after {
+    content: "→";
+    font-size: 15px;
+    line-height: 1;
+    transition: transform var(--fast) var(--ease);
+}
+
+.details-trigger:hover,
+.details-trigger[aria-expanded="true"] {
+    color: var(--orange);
+    border-color: var(--orange);
+    gap: 19px;
+}
+
+.details-trigger:hover::after,
+.details-trigger[aria-expanded="true"]::after {
+    transform: translateX(5px);
+}
+
+.infrastructure-detail {
+    grid-column: 2 / span 2;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--medium) var(--ease);
+}
+
+.infrastructure-detail-inner {
+    min-height: 0;
+    overflow: hidden;
+}
+
+.infrastructure-detail.is-open {
+    grid-template-rows: 1fr;
+}
+
+.infrastructure-detail-copy {
+    margin: 10px 0 0;
+    padding: 26px 0 4px;
+    max-width: 720px;
+    color: var(--muted);
+    font-size: 15px;
+    border-top: 1px solid var(--line);
+}
+
+/* --------------------------------------------------
+   ARCHITECTURE DIAGRAM
+-------------------------------------------------- */
+
+.architecture {
+    padding: 0 0 clamp(140px, 17vw, 260px);
+}
+
+.architecture-frame {
+    min-height: 720px;
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 2.2fr 1fr;
+}
+
+.architecture-frame::before {
+    content: "";
+    position: absolute;
+    left: 22%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--line);
+}
+
+.architecture-frame::after {
+    content: "";
+    position: absolute;
+    right: 18%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--line);
+}
+
+.architecture-side {
+    padding: 38px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.architecture-side-number {
+    font-family: var(--serif);
+    font-size: clamp(62px, 7vw, 112px);
+    line-height: .7;
+}
+
+.architecture-side-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.architecture-core {
+    position: relative;
+    z-index: 2;
+    padding: clamp(50px, 7vw, 100px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.architecture-kicker {
+    color: var(--orange);
+    margin-bottom: 34px;
+}
+
+.architecture-heading {
+    margin: 0;
+    max-width: 800px;
+    font-family: var(--serif);
+    font-size: clamp(54px, 6.2vw, 104px);
+    line-height: .8;
+    font-weight: 500;
+    letter-spacing: -.04em;
+}
+
+.architecture-heading span {
+    display: block;
+}
+
+.architecture-copy {
+    max-width: 480px;
+    margin: 48px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+}
+
+.architecture-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.architecture-grid::before,
+.architecture-grid::after {
+    content: "";
+    position: absolute;
+    background: var(--line);
+}
+
+.architecture-grid::before {
+    left: 0;
+    right: 0;
+    top: 36%;
+    height: 1px;
+}
+
+.architecture-grid::after {
+    left: 63%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+.architecture-node {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--orange);
+    z-index: 4;
+}
+
+.node-a { left: 22%; top: 36%; }
+.node-b { right: 18%; top: 63%; }
+.node-c { left: 63%; top: 36%; }
+
+/* --------------------------------------------------
+   NEXARIUM POSITION
+-------------------------------------------------- */
+
+.position {
+    padding: clamp(130px, 15vw, 220px) 0;
+    border-top: 1px solid var(--line);
+}
+
+.position-header {
+    margin-bottom: 90px;
+}
+
+.position-title {
+    margin: 24px 0 0;
+    max-width: 800px;
+    font-family: var(--serif);
+    font-size: clamp(52px, 6vw, 92px);
+    line-height: .86;
+    font-weight: 500;
+    letter-spacing: -.04em;
+}
+
+.layer-diagram {
+    position: relative;
+    max-width: 1100px;
+    margin-left: 16.666%;
+}
+
+.layer-node {
+    min-height: 150px;
+    border-top: 1px solid var(--line-strong);
+    display: grid;
+    grid-template-columns: 110px 1fr 70px;
+    align-items: center;
+    gap: 30px;
+    position: relative;
+    transition:
+        padding-left var(--medium) var(--ease),
+        background var(--medium) ease;
+}
+
+.layer-node:last-child {
+    border-bottom: 1px solid var(--line-strong);
+}
+
+.layer-node:hover {
+    padding-left: 18px;
+    background: rgba(255,255,255,.018);
+}
+
+.layer-number {
+    font-family: var(--serif);
+    font-size: 58px;
+    line-height: .8;
+    color: var(--muted);
+    transition: color var(--fast) ease;
+}
+
+.layer-node.active .layer-number,
+.layer-node:hover .layer-number {
+    color: var(--orange);
+}
+
+.layer-name {
+    font-family: var(--serif);
+    font-size: clamp(32px, 3.2vw, 54px);
+    line-height: .9;
+    font-weight: 500;
+}
+
+.layer-state {
+    justify-self: end;
+    width: 12px;
+    height: 12px;
+    border: 1px solid var(--line-strong);
+    transition: background var(--fast) ease, border-color var(--fast) ease;
+}
+
+.layer-node.active .layer-state {
+    background: var(--orange);
+    border-color: var(--orange);
+}
+
+.layer-connector {
+    position: absolute;
+    left: 54px;
+    top: 150px;
+    width: 1px;
+    height: 150px;
+    background: var(--line-strong);
+    z-index: 2;
+    transform-origin: top;
+}
+
+.layer-connector::after {
+    content: "↓";
+    position: absolute;
+    bottom: -8px;
+    left: -5px;
+    color: var(--orange);
+    font-size: 14px;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity var(--medium) ease, transform var(--medium) var(--ease);
+}
+
+.layer-node:hover + .layer-connector::after,
+.layer-connector.is-active::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.layer-node:nth-of-type(2) .layer-connector {
+    top: 150px;
+}
+
+.layer-context {
+    margin-top: 48px;
+    margin-left: 16.666%;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: .08em;
+}
+
+/* --------------------------------------------------
+   DOCUMENTATION
+-------------------------------------------------- */
+
+.documentation {
+    padding: clamp(150px, 18vw, 280px) 0;
+    border-top: 1px solid var(--line);
+}
+
+.documentation-grid {
+    align-items: start;
+}
+
+.documentation-label {
+    grid-column: 1 / span 2;
+}
+
+.documentation-content {
+    grid-column: 4 / span 8;
+}
+
+.documentation-quote {
+    margin: 0;
+    max-width: 1100px;
+    font-family: var(--serif);
+    font-size: clamp(48px, 6.2vw, 98px);
+    line-height: .88;
+    font-weight: 500;
+    letter-spacing: -.04em;
+}
+
+.documentation-quote::before {
+    content: "“";
+    color: var(--orange);
+    margin-right: .04em;
+}
+
+.documentation-placeholder {
+    max-width: 580px;
+    margin: 65px 0 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 16px;
+}
+
+.documentation-mark {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--orange);
+    margin-right: 12px;
+}
+
+/* --------------------------------------------------
+   FOOTER
+-------------------------------------------------- */
+
+.site-footer {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--line);
+    padding: 100px 0 34px;
+}
+
+.footer-main {
+    min-height: 390px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.footer-wordmark {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .3em;
+}
+
+.footer-layer {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .15em;
+    color: var(--orange);
+    text-transform: uppercase;
+}
+
+.footer-name {
+    margin: 58px 0 0;
+    max-width: 500px;
+    font-family: var(--serif);
+    font-size: clamp(48px, 5vw, 78px);
+    line-height: .82;
+    font-weight: 500;
+    letter-spacing: -.04em;
+}
+
+.footer-contact {
+    padding-top: 7px;
+}
+
+.footer-contact-label {
+    margin-bottom: 25px;
+    color: var(--muted);
+}
+
+.footer-email {
+    display: inline-block;
+    border-bottom: 1px solid var(--orange);
+    padding-bottom: 6px;
+    color: var(--ink);
+    font-size: 13px;
+    transition:
+        color var(--fast) ease,
+        letter-spacing var(--fast) ease;
+}
+
+.footer-email:hover {
+    color: var(--orange);
+    letter-spacing: .04em;
+}
+
+.footer-architecture {
+    padding-top: 7px;
+}
+
+.footer-architecture ul {
+    list-style: none;
+    margin: 25px 0 0;
+    padding: 0;
+}
+
+.footer-architecture li {
+    padding: 8px 0;
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+}
+
+.footer-bottom {
+    padding-top: 25px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    color: var(--muted);
+    font-size: 9px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+}
+
+/* --------------------------------------------------
+   CURSOR ACCENT
+-------------------------------------------------- */
+
+.cursor-accent {
+    position: fixed;
+    width: 7px;
+    height: 7px;
+    background: var(--orange);
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 180ms ease;
+}
+
+/* --------------------------------------------------
+   RESPONSIVE — 1440
+-------------------------------------------------- */
+
+@media (max-width: 1440px) {
+    .hero-grid {
+        min-height: 590px;
+    }
+
+    .architecture-frame {
+        min-height: 650px;
+    }
+}
+
+/* --------------------------------------------------
+   RESPONSIVE — 1200
+-------------------------------------------------- */
+
+@media (max-width: 1200px) {
+    .hero-meta {
+        grid-column: 1 / span 3;
+    }
+
+    .hero-title-wrap {
+        grid-column: 4 / span 7;
+    }
+
+    .hero-side {
+        grid-column: 11 / span 2;
+    }
+
+    .hero-side-name {
+        font-size: 28px;
+    }
+
+    .statement-copy {
+        grid-column: 4 / span 9;
+    }
+
+    .infrastructure-intro {
+        grid-column: 4 / span 8;
+    }
+
+    .banner-main {
+        grid-template-columns: .9fr 2fr .65fr;
+    }
+
+    .architecture-frame {
+        grid-template-columns: .7fr 2fr .7fr;
+    }
+}
+
+/* --------------------------------------------------
+   RESPONSIVE — 992
+-------------------------------------------------- */
+
+@media (max-width: 992px) {
+    :root {
+        --pad: 32px;
+    }
+
+    .site-header {
+        height: 82px;
+    }
+
+    .site-header.is-scrolled {
+        height: 68px;
+    }
+
+    .primary-nav {
+        gap: 22px;
+    }
+
+    .hero {
+        min-height: auto;
+        padding-top: 150px;
+        padding-bottom: 90px;
+    }
+
+    .hero-grid {
+        min-height: auto;
+    }
+
+    .hero-meta {
+        grid-column: 1 / span 4;
+    }
+
+    .hero-title-wrap {
+        grid-column: 5 / -1;
+    }
+
+    .hero-side {
+        grid-column: 1 / span 4;
+        margin-top: 70px;
+        padding-bottom: 0;
+    }
+
+    .hero-diagram {
+        grid-column: 5 / -1;
+        margin-top: 70px;
+    }
+
+    .hero-placeholder {
+        grid-column: 1 / -1;
+    }
+
+    .statement-label {
+        grid-column: 1 / span 3;
+    }
+
+    .statement-copy {
+        grid-column: 4 / -1;
+    }
+
+    .banner-main {
+        grid-template-columns: .8fr 1.7fr;
+    }
+
+    .banner-amber {
+        display: none;
+    }
+
+    .infrastructure-label {
+        grid-column: 1 / span 3;
+    }
+
+    .infrastructure-intro {
+        grid-column: 4 / -1;
+    }
+
+    .infrastructure-item {
+        grid-template-columns: 90px 1fr 130px;
+    }
+
+    .infrastructure-detail {
+        grid-column: 2 / -1;
+    }
+
+    .architecture-frame {
+        min-height: 600px;
+        grid-template-columns: .45fr 2fr .45fr;
+    }
+
+    .architecture-side {
+        padding: 28px;
+    }
+
+    .architecture-core {
+        padding: 55px;
+    }
+
+    .layer-diagram,
+    .layer-context {
+        margin-left: 8.333%;
+    }
+
+    .footer-main {
+        grid-template-columns: 1.6fr 1fr;
+    }
+
+    .footer-architecture {
+        grid-column: 2;
+    }
+}
+
+/* --------------------------------------------------
+   RESPONSIVE — 768
+-------------------------------------------------- */
+
+@media (max-width: 768px) {
+    :root {
+        --pad: 24px;
+    }
+
+    body {
+        font-size: 16px;
+    }
+
+    .site-header {
+        height: 74px;
+    }
+
+    .header-inner {
+        position: relative;
+    }
+
+    .brand-copy {
+        gap: 9px;
+    }
+
+    .brand-layer {
+        display: none;
+    }
+
+    .nav-toggle {
+        display: inline-flex;
+    }
+
+    .primary-nav {
+        position: absolute;
+        top: calc(100% + 1px);
+        left: 0;
+        right: 0;
+        padding: 18px var(--pad) 25px;
+        background: rgba(23,23,23,.98);
+        border-bottom: 1px solid var(--line);
+        display: grid;
+        gap: 0;
+        transform: translateY(-12px);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+            opacity var(--medium) var(--ease),
+            transform var(--medium) var(--ease);
+    }
+
+    .primary-nav.is-open {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .primary-nav a {
+        min-height: 50px;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .primary-nav a::after {
+        bottom: 0;
+    }
+
+    .hero {
+        padding-top: 125px;
+        padding-bottom: 80px;
+    }
+
+    .hero::after {
+        width: 140px;
+        height: 140px;
+        right: -60px;
+    }
+
+    .hero-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0 18px;
+    }
+
+    .hero-meta {
+        grid-column: 1 / -1;
+        padding-top: 0;
+    }
+
+    .hero-meta-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0 22px;
+        margin-top: 20px;
+    }
+
+    .hero-meta-list li {
+        width: auto;
+        border-bottom: 0;
+        padding: 4px 0;
+    }
+
+    .hero-meta-list li span:last-child {
+        display: none;
+    }
+
+    .hero-title-wrap {
+        grid-column: 1 / -1;
+        padding: 80px 0 0;
+    }
+
+    .hero-title {
+        font-size: clamp(58px, 16vw, 88px);
+    }
+
+    .hero-title .accent-line {
+        margin-left: .18em;
+    }
+
+    .hero-side {
+        grid-column: 1 / -1;
+        margin-top: 65px;
+    }
+
+    .hero-side-name {
+        max-width: 420px;
+        font-size: 34px;
+    }
+
+    .hero-diagram {
+        grid-column: 1 / -1;
+        display: block;
+        margin-top: 65px;
+    }
+
+    .diagram-number {
+        margin-bottom: 28px;
+    }
+
+    .diagram-center {
+        grid-template-columns: repeat(2, auto);
+        justify-content: start;
+    }
+
+    .diagram-right {
+        margin-top: 24px;
+        justify-content: flex-start;
+    }
+
+    .hero-placeholder {
+        grid-column: 1 / -1;
+        margin-top: 32px;
+    }
+
+    .statement {
+        padding: 110px 0;
+    }
+
+    .statement-grid {
+        display: block;
+    }
+
+    .statement-label {
+        margin-bottom: 48px;
+    }
+
+    .statement-title {
+        font-size: clamp(48px, 11vw, 68px);
+    }
+
+    .statement-placeholder {
+        margin-top: 35px;
+    }
+
+    .statement-rule {
+        margin-top: 70px;
+    }
+
+    .banner-main {
+        display: block;
+        min-height: 0;
+    }
+
+    .banner-orange {
+        min-height: 180px;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .banner-content {
+        min-height: 520px;
+        padding: 60px 24px 70px;
+    }
+
+    .banner-content::before {
+        display: none;
+    }
+
+    .banner-title {
+        font-size: clamp(58px, 14vw, 82px);
+    }
+
+    .marquee-item {
+        padding: 14px 18px;
+    }
+
+    .infrastructure {
+        padding: 110px 0;
+    }
+
+    .infrastructure-header {
+        display: block;
+        margin-bottom: 65px;
+    }
+
+    .infrastructure-label {
+        margin-bottom: 45px;
+    }
+
+    .infrastructure-title {
+        font-size: clamp(48px, 11vw, 70px);
+    }
+
+    .infrastructure-item {
+        grid-template-columns: 66px 1fr;
+        gap: 18px;
+        padding: 28px 0 25px;
+    }
+
+    .infrastructure-action {
+        grid-column: 2;
+        justify-self: start;
+        margin-top: 5px;
+    }
+
+    .infrastructure-detail {
+        grid-column: 2;
+    }
+
+    .infrastructure-item:hover {
+        padding-left: 10px;
+    }
+
+    .architecture {
+        padding-bottom: 110px;
+    }
+
+    .architecture-frame {
+        min-height: 600px;
+        display: block;
+    }
+
+    .architecture-frame::before {
+        left: 15%;
+    }
+
+    .architecture-frame::after {
+        right: 15%;
+    }
+
+    .architecture-side {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 15%;
+        padding: 20px 10px;
+        z-index: 3;
+    }
+
+    .architecture-side:last-of-type {
+        left: auto;
+        right: 0;
+    }
+
+    .architecture-side-label {
+        display: none;
+    }
+
+    .architecture-core {
+        min-height: 600px;
+        padding: 100px 15% 80px;
+    }
+
+    .architecture-heading {
+        font-size: clamp(54px, 12vw, 80px);
+    }
+
+    .architecture-copy {
+        margin-top: 38px;
+    }
+
+    .node-a { left: 15%; }
+    .node-b { right: 15%; }
+
+    .position {
+        padding: 110px 0;
+    }
+
+    .position-header {
+        margin-bottom: 60px;
+    }
+
+    .position-title {
+        font-size: clamp(52px, 12vw, 76px);
+    }
+
+    .layer-diagram,
+    .layer-context {
+        margin-left: 0;
+    }
+
+    .layer-node {
+        min-height: 120px;
+        grid-template-columns: 68px 1fr 20px;
+        gap: 16px;
+    }
+
+    .layer-number {
+        font-size: 48px;
+    }
+
+    .layer-name {
+        font-size: clamp(29px, 8vw, 45px);
+    }
+
+    .layer-connector {
+        left: 34px;
+        top: 120px;
+        height: 120px;
+    }
+
+    .documentation {
+        padding: 120px 0;
+    }
+
+    .documentation-grid {
+        display: block;
+    }
+
+    .documentation-label {
+        margin-bottom: 50px;
+    }
+
+    .documentation-quote {
+        font-size: clamp(48px, 11vw, 72px);
+    }
+
+    .footer-main {
+        display: block;
+        min-height: auto;
+    }
+
+    .footer-name {
+        margin-top: 45px;
+        margin-bottom: 75px;
+    }
+
+    .footer-architecture {
+        margin-top: 65px;
+    }
+
+    .footer-bottom {
+        margin-top: 90px;
+        display: block;
+    }
+
+    .footer-bottom span {
+        display: block;
+    }
+
+    .footer-bottom span + span {
+        margin-top: 12px;
+    }
+}
+
+/* --------------------------------------------------
+   RESPONSIVE — 480
+-------------------------------------------------- */
+
+@media (max-width: 480px) {
+    :root {
+        --pad: 18px;
+    }
+
+    .brand-name {
+        font-size: 12px;
+        letter-spacing: .24em;
+    }
+
+    .hero {
+        padding-top: 110px;
+    }
+
+    .hero-title {
+        font-size: clamp(54px, 16vw, 72px);
+    }
+
+    .hero-side-name {
+        font-size: 31px;
+    }
+
+    .diagram-center {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .diagram-line {
+        width: 48px;
+    }
+
+    .banner-orange {
+        min-height: 155px;
+        padding: 25px 18px;
+    }
+
+    .banner-index {
+        font-size: 64px;
+    }
+
+    .banner-small {
+        max-width: 145px;
+        font-size: 9px;
+    }
+
+    .banner-content {
+        min-height: 480px;
+        padding: 55px 18px 65px;
+    }
+
+    .banner-title {
+        font-size: clamp(52px, 15vw, 68px);
+    }
+
+    .infrastructure-item {
+        grid-template-columns: 55px 1fr;
+        gap: 12px;
+    }
+
+    .infrastructure-index {
+        font-size: 42px;
+    }
+
+    .infrastructure-name {
+        font-size: 27px;
+    }
+
+    .infrastructure-summary {
+        font-size: 15px;
+    }
+
+    .architecture-frame {
+        min-height: 560px;
+    }
+
+    .architecture-core {
+        min-height: 560px;
+        padding: 90px 13% 65px;
+    }
+
+    .architecture-heading {
+        font-size: 51px;
+    }
+
+    .architecture-copy {
+        font-size: 15px;
+    }
+
+    .layer-node {
+        min-height: 105px;
+        grid-template-columns: 52px 1fr 12px;
+        gap: 11px;
+    }
+
+    .layer-number {
+        font-size: 40px;
+    }
+
+    .layer-name {
+        font-size: 27px;
+    }
+
+    .layer-connector {
+        left: 26px;
+        top: 105px;
+        height: 105px;
+    }
+
+    .footer-name {
+        font-size: 52px;
+    }
+}
+
+/* --------------------------------------------------
+   RESPONSIVE — 375
+-------------------------------------------------- */
+
+@media (max-width: 375px) {
+    :root {
+        --pad: 16px;
+    }
+
+    .hero-title {
+        font-size: 50px;
+    }
+
+    .hero-meta-list {
+        display: block;
+    }
+
+    .hero-meta-list li {
+        display: inline-flex;
+        margin-right: 15px;
+    }
+
+    .banner-title {
+        font-size: 48px;
+    }
+
+    .architecture-heading {
+        font-size: 46px;
+    }
+
+    .documentation-quote {
+        font-size: 45px;
+    }
+}
+
+/* --------------------------------------------------
+   MOTION
+-------------------------------------------------- */
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@media (hover: none) {
+    .cursor-accent {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
+
+    .cursor-accent {
+        display: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header" id="site-header">
+    <div class="header-inner">
+        <a class="brand" href="index.html" aria-label="NVO987 Institution Layer — Home">
+            <span class="brand-marker" aria-hidden="true"></span>
+            <span class="brand-copy">
+                <span class="brand-name">NVO987</span>
+                <span class="brand-layer">INSTITUTION</span>
+            </span>
+        </a>
+
+        <button
+            class="nav-toggle"
+            type="button"
+            aria-label="Open navigation"
+            aria-expanded="false"
+            aria-controls="primary-navigation"
+        >
+            <span class="nav-toggle-lines" aria-hidden="true">
+                <span></span>
+                <span></span>
+            </span>
+        </button>
+
+        <nav class="primary-nav" id="primary-navigation" aria-label="Primary navigation">
+            <a href="index.html">HOME</a>
+            <a href="https://www.nvo987.fr/" aria-current="page">INSTITUTION</a>
+            <a href="contact.html">CONTACT</a>
+            <a href="https://nvo987.us/legal-information.html">LEGAL INFORMATION</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <!-- ==================================================
+         INSTITUTION HERO
+    =================================================== -->
+
+    <section class="hero" aria-labelledby="hero-title">
+        <div class="container">
+            <div class="hero-grid grid-12">
+
+                <div class="hero-meta reveal">
+                    <span class="eyebrow">NEXARIUM</span>
+
+                    <ul class="hero-meta-list" aria-label="Institution layer metadata">
+                        <li>
+                            <span>INSTITUTIONAL PORTAL</span>
+                            <span>02</span>
+                        </li>
+                        <li>
+                            <span>LAYER</span>
+                            <span>02</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="hero-title-wrap reveal reveal-delay-1">
+                    <h1 class="hero-title" id="hero-title">
+                        <span>INSTITUTION</span>
+                        <span class="accent-line">LAYER</span>
+                    </h1>
+                </div>
+
+                <div class="hero-side reveal reveal-delay-2">
+                    <p class="hero-side-name">
+                        NVO987-Culture Visuelle Moderne et Contemporaine
+                    </p>
+                    <a class="hero-url" href="https://www.nvo987.fr/">
+                        www.nvo987.fr
+                    </a>
+                </div>
+
+                <div class="hero-diagram reveal reveal-delay-3" aria-label="Institution layer structural composition">
+                    <div class="diagram-number">02</div>
+
+                    <div class="diagram-center">
+                        <span>INSTITUTION</span>
+                        <span>CULTURE</span>
+                        <span>VISUELLE</span>
+                        <span>MODERNE</span>
+                        <span>CONTEMPORAINE</span>
+                    </div>
+
+                    <div class="diagram-right" aria-hidden="true">
+                        <span class="diagram-line"></span>
+                        <span class="diagram-node"></span>
+                    </div>
+                </div>
+
+                <p class="hero-placeholder reveal reveal-delay-4">
+                    xxxxxxxxx
+                </p>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================================================
+         INSTITUTIONAL STATEMENT
+    =================================================== -->
+
+    <section class="statement" aria-labelledby="statement-title">
+        <div class="container">
+            <div class="statement-grid grid-12">
+
+                <div class="statement-label reveal">
+                    <span class="eyebrow">02</span>
+                    <p class="mono" style="margin: 18px 0 0; color: var(--muted);">
+                        INSTITUTION LAYER
+                    </p>
+                </div>
+
+                <div class="statement-copy reveal reveal-delay-1">
+                    <h2 class="statement-title" id="statement-title">
+                        NVO987-Culture Visuelle Moderne et Contemporaine
+                    </h2>
+
+                    <p class="statement-placeholder">
+                        xxxxxxxxx
+                    </p>
+                </div>
+
+                <div class="statement-rule rule reveal reveal-delay-2"></div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================================================
+         WHITE / ORANGE INSTITUTIONAL INSERT
+    =================================================== -->
+
+    <section class="institutional-banner" aria-label="Institutional editorial insert">
+
+        <div class="banner-main">
+
+            <div class="banner-orange">
+                <span class="banner-index">02</span>
+                <span class="banner-small">NEXARIUM / INSTITUTIONAL SYSTEM</span>
+            </div>
+
+            <div class="banner-content">
+                <div class="banner-kicker">NEXARIUM — INSTITUTIONAL SYSTEM</div>
+
+                <h2 class="banner-title">
+                    <span>CULTURE</span>
+                    <span>BECOMES</span>
+                    <span>STRUCTURE.</span>
+                </h2>
+
+                <a class="banner-cta" href="#infrastructure">
+                    VIEW STRUCTURE <span aria-hidden="true">→</span>
+                </a>
+            </div>
+
+            <div class="banner-amber">
+                <div class="banner-amber-meta">
+                    <div>02 / 03</div>
+                    <div>INSTITUTION</div>
+                    <div>xxxxxxxxx</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee-track">
+                <span class="marquee-item">NEXARIUM</span>
+                <span class="marquee-item">INSTITUTION LAYER</span>
+                <span class="marquee-item">CULTURE VISUELLE</span>
+                <span class="marquee-item">NVO987</span>
+                <span class="marquee-item">NEXARIUM</span>
+                <span class="marquee-item">INSTITUTION LAYER</span>
+                <span class="marquee-item">CULTURE VISUELLE</span>
+                <span class="marquee-item">NVO987</span>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ==================================================
+         INFRASTRUCTURE INDEX
+    =================================================== -->
+
+    <section class="infrastructure" id="infrastructure" aria-labelledby="infrastructure-title">
+        <div class="container">
+
+            <div class="infrastructure-header grid-12">
+
+                <div class="infrastructure-label reveal">
+                    <span class="eyebrow">02</span>
+                    <p class="mono" style="margin: 18px 0 0; color: var(--muted);">
+                        INSTITUTION LAYER
+                    </p>
+                </div>
+
+                <div class="infrastructure-intro reveal reveal-delay-1">
+                    <h2 class="infrastructure-title" id="infrastructure-title">
+                        NVO987-Culture Visuelle Moderne et Contemporaine
+                    </h2>
+
+                    <div class="infrastructure-domain">www.nvo987.fr</div>
+
+                    <p class="infrastructure-description">
+                        xxxxxxxxx
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="infrastructure-list">
+
+                <article class="infrastructure-item reveal">
+                    <div class="infrastructure-index">01</div>
+                    <div class="infrastructure-main">
+                        <h3 class="infrastructure-name">NVO987 Infrastructure I</h3>
+                        <p class="infrastructure-summary">xxxxxxxxx</p>
+                    </div>
+                    <div class="infrastructure-action">
+                        <button class="details-trigger" type="button" aria-expanded="false" aria-controls="detail-01">
+                            DETAILS
+                        </button>
+                    </div>
+                    <div class="infrastructure-detail" id="detail-01">
+                        <div class="infrastructure-detail-inner">
+                            <p class="infrastructure-detail-copy">xxxxxxxxx</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="infrastructure-item reveal reveal-delay-1">
+                    <div class="infrastructure-index">02</div>
+                    <div class="infrastructure-main">
+                        <h3 class="infrastructure-name">NVO987 Infrastructure II</h3>
+                        <p class="infrastructure-summary">xxxxxxxxx</p>
+                    </div>
+                    <div class="infrastructure-action">
+                        <button class="details-trigger" type="button" aria-expanded="false" aria-controls="detail-02">
+                            DETAILS
+                        </button>
+                    </div>
+                    <div class="infrastructure-detail" id="detail-02">
+                        <div class="infrastructure-detail-inner">
+                            <p class="infrastructure-detail-copy">xxxxxxxxx</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="infrastructure-item reveal">
+                    <div class="infrastructure-index">03</div>
+                    <div class="infrastructure-main">
+                        <h3 class="infrastructure-name">NVO987 Infrastructure III</h3>
+                        <p class="infrastructure-summary">xxxxxxxxx</p>
+                    </div>
+                    <div class="infrastructure-action">
+                        <button class="details-trigger" type="button" aria-expanded="false" aria-controls="detail-03">
+                            DETAILS
+                        </button>
+                    </div>
+                    <div class="infrastructure-detail" id="detail-03">
+                        <div class="infrastructure-detail-inner">
+                            <p class="infrastructure-detail-copy">xxxxxxxxx</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="infrastructure-item reveal reveal-delay-1">
+                    <div class="infrastructure-index">04</div>
+                    <div class="infrastructure-main">
+                        <h3 class="infrastructure-name">NVO987 Infrastructure IV</h3>
+                        <p class="infrastructure-summary">xxxxxxxxx</p>
+                    </div>
+                    <div class="infrastructure-action">
+                        <button class="details-trigger" type="button" aria-expanded="false" aria-controls="detail-04">
+                            DETAILS
+                        </button>
+                    </div>
+                    <div class="infrastructure-detail" id="detail-04">
+                        <div class="infrastructure-detail-inner">
+                            <p class="infrastructure-detail-copy">xxxxxxxxx</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="infrastructure-item reveal">
+                    <div class="infrastructure-index">05</div>
+                    <div class="infrastructure-main">
+                        <h3 class="infrastructure-name">NVO987 Infrastructure V</h3>
+                        <p class="infrastructure-summary">xxxxxxxxx</p>
+                    </div>
+                    <div class="infrastructure-action">
+                        <button class="details-trigger" type="button" aria-expanded="false" aria-controls="detail-05">
+                            DETAILS
+                        </button>
+                    </div>
+                    <div class="infrastructure-detail" id="detail-05">
+                        <div class="infrastructure-detail-inner">
+                            <p class="infrastructure-detail-copy">xxxxxxxxx</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="infrastructure-item reveal reveal-delay-1">
+                    <div class="infrastructure-index">06</div>
+                    <div class="infrastructure-main">
+                        <h3 class="infrastructure-name">NVO987 Infrastructure VI</h3>
+                        <p class="infrastructure-summary">xxxxxxxxx</p>
+                    </div>
+                    <div class="infrastructure-action">
+                        <button class="details-trigger" type="button" aria-expanded="false" aria-controls="detail-06">
+                            DETAILS
+                        </button>
+                    </div>
+                    <div class="infrastructure-detail" id="detail-06">
+                        <div class="infrastructure-detail-inner">
+                            <p class="infrastructure-detail-copy">xxxxxxxxx</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="infrastructure-item reveal">
+                    <div class="infrastructure-index">07</div>
+                    <div class="infrastructure-main">
+                        <h3 class="infrastructure-name">NVO987 Infrastructure VII</h3>
+                        <p class="infrastructure-summary">xxxxxxxxx</p>
+                    </div>
+                    <div class="infrastructure-action">
+                        <button class="details-trigger" type="button" aria-expanded="false" aria-controls="detail-07">
+                            DETAILS
+                        </button>
+                    </div>
+                    <div class="infrastructure-detail" id="detail-07">
+                        <div class="infrastructure-detail-inner">
+                            <p class="infrastructure-detail-copy">xxxxxxxxx</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="infrastructure-item reveal reveal-delay-1">
+                    <div class="infrastructure-index">08</div>
+                    <div class="infrastructure-main">
+                        <h3 class="infrastructure-name">NVO987 Infrastructure VIII</h3>
+                        <p class="infrastructure-summary">xxxxxxxxx</p>
+                    </div>
+                    <div class="infrastructure-action">
+                        <button class="details-trigger" type="button" aria-expanded="false" aria-controls="detail-08">
+                            DETAILS
+                        </button>
+                    </div>
+                    <div class="infrastructure-detail" id="detail-08">
+                        <div class="infrastructure-detail-inner">
+                            <p class="infrastructure-detail-copy">xxxxxxxxx</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="infrastructure-item reveal">
+                    <div class="infrastructure-index">09</div>
+                    <div class="infrastructure-main">
+                        <h3 class="infrastructure-name">NVO987 Infrastructure IX</h3>
+                        <p class="infrastructure-summary">xxxxxxxxx</p>
+                    </div>
+                    <div class="infrastructure-action">
+                        <button class="details-trigger" type="button" aria-expanded="false" aria-controls="detail-09">
+                            DETAILS
+                        </button>
+                    </div>
+                    <div class="infrastructure-detail" id="detail-09">
+                        <div class="infrastructure-detail-inner">
+                            <p class="infrastructure-detail-copy">xxxxxxxxx</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="infrastructure-item reveal reveal-delay-1">
+                    <div class="infrastructure-index">10</div>
+                    <div class="infrastructure-main">
+                        <h3 class="infrastructure-name">NVO987 Infrastructure X</h3>
+                        <p class="infrastructure-summary">xxxxxxxxx</p>
+                    </div>
+                    <div class="infrastructure-action">
+                        <button class="details-trigger" type="button" aria-expanded="false" aria-controls="detail-10">
+                            DETAILS
+                        </button>
+                    </div>
+                    <div class="infrastructure-detail" id="detail-10">
+                        <div class="infrastructure-detail-inner">
+                            <p class="infrastructure-detail-copy">xxxxxxxxx</p>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================================================
+         INSTITUTIONAL ARCHITECTURE
+    =================================================== -->
+
+    <section class="architecture" aria-labelledby="architecture-title">
+        <div class="container">
+
+            <div class="architecture-frame reveal">
+                <div class="architecture-grid" aria-hidden="true"></div>
+                <span class="architecture-node node-a" aria-hidden="true"></span>
+                <span class="architecture-node node-b" aria-hidden="true"></span>
+                <span class="architecture-node node-c" aria-hidden="true"></span>
+
+                <div class="architecture-side">
+                    <span class="architecture-side-number">02</span>
+                    <span class="architecture-side-label">Institutional Architecture</span>
+                </div>
+
+                <div class="architecture-core">
+                    <span class="eyebrow architecture-kicker">INSTITUTIONAL ARCHITECTURE</span>
+
+                    <h2 class="architecture-heading" id="architecture-title">
+                        <span>NVO987</span>
+                        <span>CULTURE VISUELLE</span>
+                        <span>MODERNE ET</span>
+                        <span>CONTEMPORAINE</span>
+                    </h2>
+
+                    <p class="architecture-copy">
+                        xxxxxxxxx
+                    </p>
+                </div>
+
+                <div class="architecture-side">
+                    <span class="mono">02 / 10</span>
+                    <span class="mono" style="color: var(--orange);">NVO987</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==================================================
+         NEXARIUM STRUCTURAL POSITION
+    =================================================== -->
+
+    <section class="position" aria-labelledby="position-title">
+        <div class="container">
+
+            <div class="position-header reveal">
+                <span class="eyebrow">NEXARIUM</span>
+                <h2 class="position-title" id="position-title">
+                    STRUCTURAL POSITION
+                </h2>
+            </div>
+
+            <div class="layer-diagram" aria-label="Nexarium layer hierarchy">
+
+                <a class="layer-node" href="https://www.nvo987.us/" aria-label="01 NVO987 Layer">
+                    <span class="layer-number">01</span>
+                    <span class="layer-name">NVO987 LAYER</span>
+                    <span class="layer-state" aria-hidden="true"></span>
+                </a>
+
+                <div class="layer-connector" aria-hidden="true"></div>
+
+                <a class="layer-node active" href="https://www.nvo987.fr/" aria-current="page" aria-label="02 Institution Layer — active layer">
+                    <span class="layer-number">02</span>
+                    <span class="layer-name">INSTITUTION LAYER</span>
+                    <span class="layer-state" aria-hidden="true"></span>
+                </a>
+
+                <div class="layer-connector" aria-hidden="true"></div>
+
+                <a class="layer-node" href="#" aria-label="03 Civilisation Layer">
+                    <span class="layer-number">03</span>
+                    <span class="layer-name">CIVILISATION LAYER</span>
+                    <span class="layer-state" aria-hidden="true"></span>
+                </a>
+
+            </div>
+
+            <p class="layer-context mono reveal">
+                02 / INSTITUTION LAYER / ACTIVE
+            </p>
+
+        </div>
+    </section>
+
+    <!-- ==================================================
+         DOCUMENTATION
+    =================================================== -->
+
+    <section class="documentation" aria-labelledby="documentation-title">
+        <div class="container">
+
+            <div class="documentation-grid grid-12">
+
+                <div class="documentation-label reveal">
+                    <span class="eyebrow">03</span>
+                    <p class="mono" style="margin: 18px 0 0; color: var(--muted);">
+                        DOCUMENTATION
+                    </p>
+                </div>
+
+                <div class="documentation-content reveal reveal-delay-1">
+                    <h2 class="documentation-quote" id="documentation-title">
+                        Structure makes culture visible.
+                    </h2>
+
+                    <p class="documentation-placeholder">
+                        <span class="documentation-mark" aria-hidden="true"></span>
+                        xxxxxxxxx
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- ==================================================
+     FOOTER
+=================================================== -->
+
+<footer class="site-footer">
+    <div class="container">
+
+        <div class="footer-main">
+
+            <div class="footer-brand">
+                <div>
+                    <p class="footer-wordmark">NVO987</p>
+                    <p class="footer-layer">INSTITUTION LAYER</p>
+                </div>
+
+                <p class="footer-name">
+                    Nicholas<br>
+                    Van-Orton
+                </p>
+            </div>
+
+            <div class="footer-contact">
+                <div class="footer-contact-label mono">
+                    DIRECT CORRESPONDENCE
+                </div>
+
+                <a class="footer-email" href="mailto:nvo@nvo987.us">
+                    nvo@nvo987.us
+                </a>
+            </div>
+
+            <div class="footer-architecture">
+                <div class="mono">NEXARIUM</div>
+                <ul aria-label="Nexarium hierarchy">
+                    <li>01 / NVO987 LAYER</li>
+                    <li style="color: var(--orange);">02 / INSTITUTION LAYER</li>
+                    <li>03 / CIVILISATION LAYER</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <span>© NICHOLAS VAN-ORTON</span>
+            <span>NVO987 / NEXARIUM / ALL RIGHTS RESERVED</span>
+        </div>
+
+    </div>
+</footer>
+
+<div class="cursor-accent" aria-hidden="true"></div>
+
+<script>
+(function () {
+    "use strict";
+
+    const header = document.getElementById("site-header");
+    const navToggle = document.querySelector(".nav-toggle");
+    const primaryNav = document.getElementById("primary-navigation");
+    const cursorAccent = document.querySelector(".cursor-accent");
+
+    /* --------------------------------------------------
+       Sticky header state
+    -------------------------------------------------- */
+
+    function updateHeader() {
+        if (window.scrollY > 24) {
+            header.classList.add("is-scrolled");
+        } else {
+            header.classList.remove("is-scrolled");
+        }
+    }
+
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+
+    /* --------------------------------------------------
+       Mobile navigation
+    -------------------------------------------------- */
+
+    function closeNavigation() {
+        if (!navToggle || !primaryNav) return;
+
+        navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute("aria-label", "Open navigation");
+        primaryNav.classList.remove("is-open");
+    }
+
+    if (navToggle && primaryNav) {
+        navToggle.addEventListener("click", function () {
+            const isOpen = navToggle.getAttribute("aria-expanded") === "true";
+
+            navToggle.setAttribute("aria-expanded", String(!isOpen));
+            navToggle.setAttribute(
+                "aria-label",
+                isOpen ? "Open navigation" : "Close navigation"
+            );
+
+            primaryNav.classList.toggle("is-open", !isOpen);
+        });
+
+        primaryNav.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", closeNavigation);
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                closeNavigation();
+                navToggle.focus();
+            }
+        });
+
+        window.addEventListener("resize", function () {
+            if (window.innerWidth > 768) {
+                closeNavigation();
+            }
+        });
+    }
+
+    /* --------------------------------------------------
+       Infrastructure editorial reveals
+    -------------------------------------------------- */
+
+    document.querySelectorAll(".details-trigger").forEach(function (trigger) {
+        trigger.addEventListener("click", function () {
+            const targetId = trigger.getAttribute("aria-controls");
+            const target = document.getElementById(targetId);
+
+            if (!target) return;
+
+            const isOpen = trigger.getAttribute("aria-expanded") === "true";
+
+            trigger.setAttribute("aria-expanded", String(!isOpen));
+            target.classList.toggle("is-open", !isOpen);
+        });
+    });
+
+    /* --------------------------------------------------
+       IntersectionObserver scroll reveals
+    -------------------------------------------------- */
+
+    const revealElements = document.querySelectorAll(".reveal");
+
+    if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(
+            function (entries, observer) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            {
+                threshold: 0.12,
+                rootMargin: "0px 0px -30px 0px"
+            }
+        );
+
+        revealElements.forEach(function (element) {
+            revealObserver.observe(element);
+        });
+    } else {
+        revealElements.forEach(function (element) {
+            element.classList.add("is-visible");
+        });
+    }
+
+    /* --------------------------------------------------
+       Structural diagram micro-interaction
+    -------------------------------------------------- */
+
+    const layerNodes = document.querySelectorAll(".layer-node");
+    const connectors = document.querySelectorAll(".layer-connector");
+
+    layerNodes.forEach(function (node, index) {
+        node.addEventListener("mouseenter", function () {
+            if (connectors[index]) {
+                connectors[index].classList.add("is-active");
+            }
+        });
+
+        node.addEventListener("mouseleave", function () {
+            if (connectors[index]) {
+                connectors[index].classList.remove("is-active");
+            }
+        });
+
+        node.addEventListener("focus", function () {
+            if (connectors[index]) {
+                connectors[index].classList.add("is-active");
+            }
+        });
+
+        node.addEventListener("blur", function () {
+            if (connectors[index]) {
+                connectors[index].classList.remove("is-active");
+            }
+        });
+    });
+
+    /* --------------------------------------------------
+       Desktop-only cursor accent
+    -------------------------------------------------- */
+
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    function enableCursorAccent() {
+        if (!cursorAccent || !finePointer.matches || reducedMotion.matches) return;
+
+        cursorAccent.style.opacity = "1";
+
+        document.addEventListener("pointermove", moveCursor);
+    }
+
+    function moveCursor(event) {
+        cursorAccent.style.left = event.clientX + "px";
+        cursorAccent.style.top = event.clientY + "px";
+    }
+
+    function disableCursorAccent() {
+        if (!cursorAccent) return;
+
+        cursorAccent.style.opacity = "0";
+        document.removeEventListener("pointermove", moveCursor);
+    }
+
+    enableCursorAccent();
+
+    finePointer.addEventListener("change", function () {
+        if (finePointer.matches && !reducedMotion.matches) {
+            enableCursorAccent();
+        } else {
+            disableCursorAccent();
+        }
+    });
+
+    reducedMotion.addEventListener("change", function () {
+        if (reducedMotion.matches) {
+            disableCursorAccent();
+        } else if (finePointer.matches) {
+            enableCursorAccent();
+        }
+    });
+
+    /* --------------------------------------------------
+       Internal anchor offset for fixed header
+    -------------------------------------------------- */
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener("click", function (event) {
+            const targetId = link.getAttribute("href");
+
+            if (!targetId || targetId === "#") {
+                event.preventDefault();
+                return;
+            }
+
+            const target = document.querySelector(targetId);
+
+            if (!target) return;
+
+            event.preventDefault();
+
+            const headerHeight = header ? header.offsetHeight : 0;
+            const targetPosition =
+                target.getBoundingClientRect().top +
+                window.scrollY -
+                headerHeight -
+                20;
+
+            window.scrollTo({
+                top: targetPosition,
+                behavior: reducedMotion.matches ? "auto" : "smooth"
+            });
+        });
+    });
+
+})();
+</script>
+
+</body>
+  </html> 

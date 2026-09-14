@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NVO987 — Institution Layer | Nicholas Van-Orton</title>
+
+  <meta
+    name="description"
+    content="NVO987 — Institution Layer — Nicholas Van-Orton."
+  >
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+
+    :root {
+      --paper: #f3f0e9;
+      --paper-2: #e9e5dc;
+      --ink: #171717;
+      --muted: #77736b;
+      --rule: #c8c2b8;
+      --orange: #e75b1a;
+      --white: #fffdf8;
+
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "Inter", Arial, sans-serif;
+
+      --page: min(1440px, 100%);
+      --pad: clamp(20px, 4vw, 64px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--orange);
+      outline-offset: 4px;
+    }
+
+    .wrap {
+      width: var(--page);
+      margin: 0 auto;
+      padding-inline: var(--pad);
+    }
+
+    .label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    /* ========================================
+       HEADER
+    ======================================== */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(243, 240, 233, .96);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .header {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .18em;
+    }
+
+    .logo-square {
+      width: 17px;
+      height: 17px;
+      background: var(--orange);
+      flex: 0 0 auto;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(18px, 3vw, 44px);
+    }
+
+    nav a {
+      position: relative;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 7px;
+      width: 0;
+      height: 2px;
+      background: var(--orange);
+      transition: width .2s ease;
+    }
+
+    nav a:hover::after,
+    nav a[aria-current="page"]::after {
+      width: 100%;
+    }
+
+    .menu {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border: 1px solid var(--rule);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    /* ========================================
+       HERO
+    ======================================== */
+
+    .hero {
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .hero-grid {
+      min-height: calc(100vh - 73px);
+      display: grid;
+      grid-template-columns: 3fr 9fr;
+      gap: 30px;
+      align-items: end;
+      padding-top: clamp(60px, 9vw, 120px);
+      padding-bottom: clamp(55px, 8vw, 100px);
+    }
+
+    .hero-context {
+      align-self: start;
+      padding-top: 8px;
+    }
+
+    .hero-context .label {
+      margin-bottom: 14px;
+    }
+
+    .hero-context p {
+      max-width: 220px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero-content {
+      min-width: 0;
+    }
+
+    .hero-number {
+      font-family: var(--serif);
+      font-size: clamp(120px, 19vw, 280px);
+      line-height: .58;
+      font-weight: 400;
+      color: var(--orange);
+      margin-bottom: 45px;
+    }
+
+    h1 {
+      max-width: 1050px;
+      font-family: var(--serif);
+      font-size: clamp(70px, 11vw, 165px);
+      font-weight: 500;
+      line-height: .78;
+      letter-spacing: -.04em;
+      text-transform: uppercase;
+    }
+
+    .hero-definition {
+      max-width: 730px;
+      margin-top: 42px;
+      padding-top: 18px;
+      border-top: 1px solid var(--ink);
+      font-family: var(--serif);
+      font-size: clamp(25px, 3vw, 43px);
+      line-height: 1;
+    }
+
+    .hero-domain {
+      margin-top: 28px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+    }
+
+    /* ========================================
+       WHAT IS THE LAYER
+    ======================================== */
+
+    .definition {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .definition-grid {
+      display: grid;
+      grid-template-columns: 3fr 7fr 2fr;
+      gap: 30px;
+      padding-block: clamp(70px, 10vw, 140px);
+    }
+
+    .definition-title {
+      font-family: var(--serif);
+      font-size: clamp(43px, 5vw, 76px);
+      line-height: .88;
+      font-weight: 500;
+    }
+
+    .definition-text {
+      max-width: 730px;
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.42;
+    }
+
+    .definition-text p + p {
+      margin-top: 28px;
+    }
+
+    .definition-index {
+      justify-self: end;
+      font-family: var(--serif);
+      font-size: 80px;
+      line-height: .7;
+      color: var(--orange);
+    }
+
+    /* ========================================
+       INSTITUTION
+    ======================================== */
+
+    .institution {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .institution-inner {
+      padding-block: clamp(75px, 10vw, 145px);
+    }
+
+    .institution-header {
+      display: grid;
+      grid-template-columns: 3fr 9fr;
+      gap: 30px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid #45433f;
+    }
+
+    .institution-header .label {
+      color: #aaa59c;
+    }
+
+    .institution h2 {
+      max-width: 1100px;
+      font-family: var(--serif);
+      font-size: clamp(48px, 7vw, 105px);
+      font-weight: 500;
+      line-height: .84;
+      letter-spacing: -.03em;
+    }
+
+    .institution-body {
+      display: grid;
+      grid-template-columns: 3fr 7fr 2fr;
+      gap: 30px;
+      margin-top: 55px;
+    }
+
+    .institution-body p {
+      grid-column: 4 / 11;
+      max-width: 700px;
+      color: #d0ccc4;
+      font-size: 18px;
+    }
+
+    .institution-mark {
+      grid-column: 11 / 13;
+      justify-self: end;
+      font-family: var(--serif);
+      font-size: 70px;
+      color: var(--orange);
+      line-height: .7;
+    }
+
+    /* ========================================
+       EDITORIAL BANNER
+    ======================================== */
+
+    .banner {
+      position: relative;
+      overflow: hidden;
+      background: var(--orange);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .banner::before,
+    .banner::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(23, 23, 23, .35);
+    }
+
+    .banner::before {
+      left: 20%;
+    }
+
+    .banner::after {
+      right: 20%;
+    }
+
+    .banner-inner {
+      position: relative;
+      z-index: 1;
+      padding-block: clamp(70px, 10vw, 140px);
+    }
+
+    .banner-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .banner h2 {
+      max-width: 1100px;
+      margin-top: 65px;
+      font-family: var(--serif);
+      font-size: clamp(62px, 9vw, 135px);
+      font-weight: 500;
+      line-height: .76;
+      letter-spacing: -.04em;
+      text-transform: uppercase;
+    }
+
+    .banner-footer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px;
+      margin-top: 65px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(23, 23, 23, .45);
+    }
+
+    .banner-footer p {
+      max-width: 520px;
+      font-size: 15px;
+    }
+
+    .banner-link {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      border-bottom: 2px solid var(--ink);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ========================================
+       INFRASTRUCTURE
+    ======================================== */
+
+    .infrastructure {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .infra-grid {
+      display: grid;
+      grid-template-columns: 3fr 9fr;
+      gap: 30px;
+      padding-block: clamp(75px, 10vw, 145px);
+    }
+
+    .infra-intro h2 {
+      margin-top: 20px;
+      font-family: var(--serif);
+      font-size: clamp(48px, 6vw, 90px);
+      font-weight: 500;
+      line-height: .82;
+      text-transform: uppercase;
+    }
+
+    .infra-intro p {
+      max-width: 230px;
+      margin-top: 30px;
+      font-size: 13px;
+    }
+
+    .infra-list {
+      border-top: 1px solid var(--ink);
+    }
+
+    .infra-item {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .infra-trigger {
+      width: 100%;
+      min-height: 88px;
+      display: grid;
+      grid-template-columns: 70px 1fr 100px;
+      align-items: center;
+      gap: 20px;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .infra-trigger:hover .infra-name {
+      color: var(--orange);
+    }
+
+    .infra-no {
+      font-family: var(--serif);
+      font-size: 28px;
+      color: var(--orange);
+    }
+
+    .infra-name {
+      font-family: var(--serif);
+      font-size: clamp(24px, 2.6vw, 37px);
+      line-height: 1;
+      transition: color .2s ease;
+    }
+
+    .infra-action {
+      justify-self: end;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .infra-detail {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .3s ease;
+    }
+
+    .infra-detail > div {
+      overflow: hidden;
+    }
+
+    .infra-detail p {
+      max-width: 680px;
+      padding: 0 100px 30px 70px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .infra-item.open .infra-detail {
+      grid-template-rows: 1fr;
+    }
+
+    .infra-item.open .infra-action::after {
+      content: "FERMER";
+    }
+
+    .infra-item.open .infra-action {
+      font-size: 0;
+    }
+
+    .infra-item.open .infra-action::after {
+      font-size: 10px;
+    }
+
+    /* ========================================
+       DOCUMENTATION
+    ======================================== */
+
+    .documentation {
+      background: var(--paper-2);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .documentation-grid {
+      display: grid;
+      grid-template-columns: 3fr 9fr;
+      gap: 30px;
+      padding-block: clamp(75px, 10vw, 145px);
+    }
+
+    .documentation-title {
+      font-family: var(--serif);
+      font-size: clamp(46px, 6vw, 88px);
+      font-weight: 500;
+      line-height: .82;
+      text-transform: uppercase;
+    }
+
+    .documentation-main {
+      max-width: 900px;
+    }
+
+    .documentation-quote {
+      max-width: 900px;
+      font-family: var(--serif);
+      font-size: clamp(42px, 5.5vw, 82px);
+      line-height: .86;
+      font-weight: 500;
+    }
+
+    .documentation-text {
+      max-width: 680px;
+      margin-top: 42px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    /* ========================================
+       CONTACT / FOOTER
+    ======================================== */
+
+    footer {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .footer {
+      padding-block: 70px 28px;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 6fr 6fr;
+      gap: 30px;
+      padding-bottom: 85px;
+    }
+
+    .footer-name {
+      font-family: var(--serif);
+      font-size: clamp(52px, 7vw, 100px);
+      line-height: .8;
+      font-weight: 500;
+    }
+
+    .footer-sub {
+      margin-top: 24px;
+      color: #aaa59c;
+      font-size: 12px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .footer-contact {
+      justify-self: end;
+      max-width: 500px;
+    }
+
+    .footer-contact .label {
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+
+    .email {
+      display: inline-block;
+      font-family: var(--serif);
+      font-size: clamp(29px, 3.5vw, 52px);
+      line-height: .9;
+      border-bottom: 1px solid #68645e;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 30px;
+      padding-top: 25px;
+      border-top: 1px solid #45433f;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-links a,
+    .copyright {
+      color: #aaa59c;
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    /* ========================================
+       RESPONSIVE
+    ======================================== */
+
+    @media (max-width: 900px) {
+
+      nav {
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px var(--pad) 18px;
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
+      }
+
+      nav.open {
+        display: flex;
+      }
+
+      nav a {
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .menu {
+        display: block;
+      }
+
+      .hero-grid,
+      .definition-grid,
+      .institution-header,
+      .institution-body,
+      .infra-grid,
+      .documentation-grid,
+      .footer-main {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        min-height: auto;
+        padding-top: 65px;
+      }
+
+      .hero-context {
+        padding-top: 0;
+      }
+
+      .hero-number {
+        margin-top: 55px;
+      }
+
+      .definition-index {
+        display: none;
+      }
+
+      .institution-body p {
+        grid-column: auto;
+      }
+
+      .institution-mark {
+        display: none;
+      }
+
+      .infra-intro {
+        margin-bottom: 45px;
+      }
+
+      .footer-contact {
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      :root {
+        --pad: 20px;
+      }
+
+      .header {
+        min-height: 68px;
+      }
+
+      nav {
+        top: 68px;
+      }
+
+      h1 {
+        font-size: clamp(58px, 17vw, 90px);
+      }
+
+      .hero-number {
+        font-size: 125px;
+        margin-bottom: 35px;
+      }
+
+      .hero-definition {
+        font-size: 23px;
+      }
+
+      .banner-meta {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .banner h2 {
+        margin-top: 45px;
+        font-size: clamp(55px, 16vw, 88px);
+      }
+
+      .banner-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-top: 45px;
+      }
+
+      .infra-trigger {
+        grid-template-columns: 43px 1fr 65px;
+        gap: 10px;
+        min-height: 76px;
+      }
+
+      .infra-name {
+        font-size: 23px;
+      }
+
+      .infra-detail p {
+        padding-left: 43px;
+        padding-right: 25px;
+      }
+
+      .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======================================
+       NAVIGATION
+  ======================================= -->
+
+  <header>
+    <div class="wrap header">
+
+      <a class="logo" href="index.html" aria-label="NVO987 — Accueil">
+        <span class="logo-square" aria-hidden="true"></span>
+        <span>NVO987</span>
+      </a>
+
+      <button
+        class="menu"
+        type="button"
+        aria-label="Ouvrir le menu"
+        aria-expanded="false"
+        aria-controls="navigation"
+      >
+        ☰
+      </button>
+
+      <nav id="navigation" aria-label="Navigation principale">
+        <a href="index.html">Accueil</a>
+        <a href="https://www.nvo987.fr/" aria-current="page">Institution</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://nvo987.us/legal-information.html">
+          Informations légales
+        </a>
+      </nav>
+
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- ======================================
+         01 — HERO
+    ======================================= -->
+
+    <section class="hero">
+      <div class="wrap hero-grid">
+
+        <div class="hero-context">
+          <div class="label">NVO987</div>
+
+          <p>
+            Portail institutionnel
+          </p>
+
+          <p>
+            Couche institutionnelle
+          </p>
+        </div>
+
+        <div class="hero-content">
+
+          <div class="hero-number" aria-hidden="true">02</div>
+
+          <h1>
+            Institution<br>
+            Layer
+          </h1>
+
+          <div class="hero-definition">
+            NVO987 — Culture Visuelle Moderne et Contemporaine
+          </div>
+
+          <div class="hero-domain">
+            www.nvo987.fr
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ======================================
+         02 — DEFINITION
+    ======================================= -->
+
+    <section class="definition" aria-labelledby="definition-title">
+      <div class="wrap definition-grid">
+
+        <div>
+          <div class="label">02 / Institution Layer</div>
+        </div>
+
+        <div class="definition-text">
+
+          <h2 id="definition-title" class="definition-title">
+            L'institution
+          </h2>
+
+          <p>
+            xxxxxxxxx
+          </p>
+
+          <p>
+            xxxxxxxxx
+          </p>
+
+        </div>
+
+        <div class="definition-index" aria-hidden="true">
+          02
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ======================================
+         03 — INSTITUTIONAL CORE
+    ======================================= -->
+
+    <section class="institution" aria-labelledby="institution-title">
+      <div class="wrap institution-inner">
+
+        <div class="institution-header">
+          <div class="label">
+            Identité institutionnelle
+          </div>
+
+          <h2 id="institution-title">
+            NVO987-Culture Visuelle Moderne et Contemporaine
+          </h2>
+        </div>
+
+        <div class="institution-body">
+
+          <p>
+            xxxxxxxxx
+          </p>
+
+          <div class="institution-mark" aria-hidden="true">
+            NVO
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ======================================
+         04 — EDITORIAL STATEMENT
+    ======================================= -->
+
+    <section class="banner" aria-labelledby="banner-title">
+      <div class="wrap banner-inner">
+
+        <div class="banner-meta">
+          <span>Institution</span>
+          <span>NVO987</span>
+          <span>02</span>
+        </div>
+
+        <h2 id="banner-title">
+          Culture<br>
+          Becomes<br>
+          Structure.
+        </h2>
+
+        <div class="banner-footer">
+
+          <p>
+            xxxxxxxxx
+          </p>
+
+          <a class="banner-link" href="#infrastructure">
+            Voir l'infrastructure →
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ======================================
+         05 — INFRASTRUCTURE
+         EXACTEMENT 10 ÉLÉMENTS
+    ======================================= -->
+
+    <section
+      id="infrastructure"
+      class="infrastructure"
+      aria-labelledby="infra-title"
+    >
+      <div class="wrap infra-grid">
+
+        <div class="infra-intro">
+
+          <div class="label">Infrastructure</div>
+
+          <h2 id="infra-title">
+            Dix<br>
+            éléments
+          </h2>
+
+          <p class="muted">
+            L'infrastructure institutionnelle est présentée sous la forme d'un index unique.
+          </p>
+
+        </div>
+
+        <div class="infra-list">
+
+          <article class="infra-item">
+            <button
+              class="infra-trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="detail-1"
+            >
+              <span class="infra-no">01</span>
+              <span class="infra-name">NVO987 Infrastructure I</span>
+              <span class="infra-action">Détails →</span>
+            </button>
+            <div class="infra-detail" id="detail-1">
+              <div>
+                <p>xxxxxxxxx</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="infra-item">
+            <button
+              class="infra-trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="detail-2"
+            >
+              <span class="infra-no">02</span>
+              <span class="infra-name">NVO987 Infrastructure II</span>
+              <span class="infra-action">Détails →</span>
+            </button>
+            <div class="infra-detail" id="detail-2">
+              <div>
+                <p>xxxxxxxxx</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="infra-item">
+            <button
+              class="infra-trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="detail-3"
+            >
+              <span class="infra-no">03</span>
+              <span class="infra-name">NVO987 Infrastructure III</span>
+              <span class="infra-action">Détails →</span>
+            </button>
+            <div class="infra-detail" id="detail-3">
+              <div>
+                <p>xxxxxxxxx</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="infra-item">
+            <button
+              class="infra-trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="detail-4"
+            >
+              <span class="infra-no">04</span>
+              <span class="infra-name">NVO987 Infrastructure IV</span>
+              <span class="infra-action">Détails →</span>
+            </button>
+            <div class="infra-detail" id="detail-4">
+              <div>
+                <p>xxxxxxxxx</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="infra-item">
+            <button
+              class="infra-trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="detail-5"
+            >
+              <span class="infra-no">05</span>
+              <span class="infra-name">NVO987 Infrastructure V</span>
+              <span class="infra-action">Détails →</span>
+            </button>
+            <div class="infra-detail" id="detail-5">
+              <div>
+                <p>xxxxxxxxx</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="infra-item">
+            <button
+              class="infra-trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="detail-6"
+            >
+              <span class="infra-no">06</span>
+              <span class="infra-name">NVO987 Infrastructure VI</span>
+              <span class="infra-action">Détails →</span>
+            </button>
+            <div class="infra-detail" id="detail-6">
+              <div>
+                <p>xxxxxxxxx</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="infra-item">
+            <button
+              class="infra-trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="detail-7"
+            >
+              <span class="infra-no">07</span>
+              <span class="infra-name">NVO987 Infrastructure VII</span>
+              <span class="infra-action">Détails →</span>
+            </button>
+            <div class="infra-detail" id="detail-7">
+              <div>
+                <p>xxxxxxxxx</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="infra-item">
+            <button
+              class="infra-trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="detail-8"
+            >
+              <span class="infra-no">08</span>
+              <span class="infra-name">NVO987 Infrastructure VIII</span>
+              <span class="infra-action">Détails →</span>
+            </button>
+            <div class="infra-detail" id="detail-8">
+              <div>
+                <p>xxxxxxxxx</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="infra-item">
+            <button
+              class="infra-trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="detail-9"
+            >
+              <span class="infra-no">09</span>
+              <span class="infra-name">NVO987 Infrastructure IX</span>
+              <span class="infra-action">Détails →</span>
+            </button>
+            <div class="infra-detail" id="detail-9">
+              <div>
+                <p>xxxxxxxxx</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="infra-item">
+            <button
+              class="infra-trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="detail-10"
+            >
+              <span class="infra-no">10</span>
+              <span class="infra-name">NVO987 Infrastructure X</span>
+              <span class="infra-action">Détails →</span>
+            </button>
+            <div class="infra-detail" id="detail-10">
+              <div>
+                <p>xxxxxxxxx</p>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ======================================
+         06 — DOCUMENTATION
+    ======================================= -->
+
+    <section class="documentation" aria-labelledby="documentation-title">
+      <div class="wrap documentation-grid">
+
+        <div>
+          <div class="label">03 / Documentation</div>
+
+          <h2 id="documentation-title" class="documentation-title">
+            Documentation
+          </h2>
+        </div>
+
+        <div class="documentation-main">
+
+          <div class="documentation-quote">
+            Culture becomes structure.
+          </div>
+
+          <p class="documentation-text">
+            xxxxxxxxx
+          </p>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ======================================
+       FOOTER
+  ======================================= -->
+
+  <footer>
+    <div class="wrap footer">
+
+      <div class="footer-main">
+
+        <div>
+          <div class="footer-name">
+            NVO987
+          </div>
+
+          <div class="footer-sub">
+            Institution Layer · Nicholas Van-Orton
+          </div>
+        </div>
+
+        <div class="footer-contact">
+
+          <div class="label">
+            Correspondance directe
+          </div>
+
+          <a class="email" href="mailto:nvo@nvo987.us">
+            nvo@nvo987.us
+          </a>
+
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+
+        <div class="footer-links">
+          <a href="index.html">Accueil</a>
+          <a href="https://www.nvo987.fr/">Institution</a>
+          <a href="contact.html">Contact</a>
+          <a href="https://nvo987.us/legal-information.html">
+            Informations légales
+          </a>
+          <a href="https://www.nvo987.us/">
+            Portail principal NVO987
+          </a>
+        </div>
+
+        <div class="copyright">
+          © NVO987 — Nicholas Van-Orton
+        </div>
+
+      </div>
+
+    </div>
+  </footer>
+
+
+  <script>
+    /* ========================================
+       MENU MOBILE
+    ======================================== */
+
+    const menu = document.querySelector(".menu");
+    const navigation = document.querySelector("#navigation");
+
+    menu.addEventListener("click", () => {
+      const open = menu.getAttribute("aria-expanded") === "true";
+
+      menu.setAttribute("aria-expanded", String(!open));
+      menu.setAttribute(
+        "aria-label",
+        open ? "Ouvrir le menu" : "Fermer le menu"
+      );
+
+      navigation.classList.toggle("open", !open);
+    });
+
+
+    /* ========================================
+       INFRASTRUCTURE — DÉTAILS
+    ======================================== */
+
+    const infrastructureButtons =
+      document.querySelectorAll(".infra-trigger");
+
+    infrastructureButtons.forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        const item = button.closest(".infra-item");
+        const isOpen = item.classList.contains("open");
+
+        document.querySelectorAll(".infra-item").forEach(other => {
+          other.classList.remove("open");
+
+          const otherButton =
+            other.querySelector(".infra-trigger");
+
+          otherButton.setAttribute("aria-expanded", "false");
+        });
+
+        if (!isOpen) {
+          item.classList.add("open");
+          button.setAttribute("aria-expanded", "true");
+        }
+
+      });
+
+    });
+  </script>
+
+</body>
+  </html>
